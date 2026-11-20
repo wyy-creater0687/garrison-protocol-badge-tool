@@ -30,6 +30,35 @@
 - 剩下的第一格没满 6 次、也没被禁用 → 选中它，点「确认选择」开打；
 - 一整页都跳过 → 自动往下滑一页（约 4 行）；滑到底 → 全部完成。
 
+## 源码 / 仓库结构
+
+原版程序是第三方用 PyInstaller onefile 打包的闭源程序（Python 3.11），**没有源码**；
+本仓库公开的是**补丁工具链 + 配置 + 说明**，通过替换字节码来改它的行为。
+
+```
+.
+├── tools/                  补丁工具
+│   ├── patch_tool.py       主补丁：替换 3 个函数 + 放宽超时（30/90 → 180 秒）
+│   ├── extract_main.py     从 exe 导出主脚本 marshal
+│   ├── list_functions.py   列出函数 / 常量
+│   └── README.md           原理与用法（CArchive / TOC / marshal / zlib）
+├── replacements/           替换进去的函数源码
+│   ├── new_pick.py         选策略（逐格检查 + checked_full.json 缓存 + 翻页）
+│   ├── new_scroll.py       翻页拖动距离（约 780px）
+│   └── new_badge.py        彩标取色判定（多偏移容错）
+├── 使用说明.txt             给用户看的完整说明
+├── 测试1.0.bat              启动脚本（调用 测试1.0.exe）
+└── tiles.json              地图格子布局（安全位 / 敌人路径）
+```
+
+复现发布包里的 `测试1.0.exe`：
+
+```bash
+python tools/patch_tool.py 原版.exe 测试1.0.exe
+```
+
+同一份原版 exe 重新打补丁，输出与发布版**字节完全一致**（SHA256 相同，已实测）。
+
 ## 已知问题
 
 - **天空盒**：本版不刷（未知 bug），遇到会跳过；

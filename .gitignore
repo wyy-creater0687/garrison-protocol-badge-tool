@@ -1,0 +1,8 @@
+extracted/
+*.exe
+farm_logs/
+maafw_data/
+checked_full.json
+strategies_done.json
+__pycache__/
+*.pyc
