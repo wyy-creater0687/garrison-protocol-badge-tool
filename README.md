@@ -69,6 +69,8 @@ python tools/patch_tool.py 原版.exe 测试1.0.exe
 | `src/main_loop.py` | 主循环：界面导航 / 局内回合 / 结算 / 超时保护 | 结构级重建 |
 | `src/README.md` | 逻辑说明与超时常量表 | — |
 
+函数表见 [docs/function-map.md](docs/function-map.md)（85 个顶层函数，按模块分组）。
+
 反汇编原文不上传（属于原程序衍生内容），用 `tools/disasm.py` 本地生成即可。
 
 ## 已知问题
